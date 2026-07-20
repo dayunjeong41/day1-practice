@@ -12,17 +12,17 @@ URLS = [
 
 
 def format_result(url: str, result: Any) -> str:
-    """Format the fetch result for display."""
+    """요청 결과를 보기 좋게 문자열로 변환합니다."""
     if isinstance(result, Exception):
         return f"{url} -> error: {result}"
     return f"{url} -> success: {result!r}"
 
 
 async def fetch_json(client: httpx.AsyncClient, url: str) -> Any:
-    """Fetch JSON data from the URL using an AsyncClient.
+    """AsyncClient를 사용해 URL에서 JSON 데이터를 가져옵니다.
 
-    The function applies a timeout, checks HTTP status, and returns
-    parsed JSON data.
+    이 함수는 타임아웃을 적용하고 HTTP 상태를 확인한 뒤
+    파싱된 JSON 데이터를 반환합니다.
     """
     response = await client.get(url, timeout=TIMEOUT)
     response.raise_for_status()
@@ -30,14 +30,14 @@ async def fetch_json(client: httpx.AsyncClient, url: str) -> Any:
 
 
 async def fetch_all(urls: list[str]) -> list[Any]:
-    """Fetch all URLs concurrently with asyncio.gather()."""
+    """asyncio.gather()로 URL을 동시에 요청합니다."""
     async with httpx.AsyncClient() as client:
         tasks = [fetch_json(client, url) for url in urls]
         return await asyncio.gather(*tasks, return_exceptions=True)
 
 
 async def main() -> int:
-    """Run concurrent HTTP requests and print the responses."""
+    """동시 HTTP 요청을 실행하고 결과를 출력합니다."""
     try:
         results = await fetch_all(URLS)
     except Exception as exc:
