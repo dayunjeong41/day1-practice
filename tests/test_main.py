@@ -38,6 +38,21 @@ def test_validate_data_raises_validation_error() -> None:
         validate_data("https://api.open-meteo.com/v1/forecast", invalid_data)
 
 
+def test_validate_countries_dev_data() -> None:
+    raw_data = {
+        "name": "Korea (Republic of)",
+        "alpha2Code": "KR",
+        "capital": "Seoul",
+        "region": "Asia",
+    }
+
+    validated = validate_data("https://countries.dev/alpha/KOR", raw_data)
+
+    assert validated["name"] == "Korea (Republic of)"
+    assert validated["alpha2_code"] == "KR"
+    assert validated["capital"] == "Seoul"
+
+
 def test_partition_raw_data_separates_valid_and_errors() -> None:
     raw_rows = [
         (

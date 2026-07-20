@@ -36,9 +36,11 @@ class WeatherResponse(BaseModel):
 
 class CountryResponse(BaseModel):
     name: str
-    cca2: str = Field(..., min_length=2, max_length=2)
-    capital: Optional[list[str]]
-    region: Optional[str]
+    alpha2_code: str = Field(
+        ..., alias="alpha2Code", min_length=2, max_length=2
+    )
+    capital: Optional[str] = None
+    region: Optional[str] = None
 
 
 class IpResponse(BaseModel):
