@@ -25,6 +25,7 @@ pluggy==1.6.0
 polars==1.42.1
 polars-runtime-32==1.42.1
 pyarrow==25.0.0
+pydantic==2.13.4
 Pygments==2.20.0
 pyparsing==3.3.2
 pytest==9.1.1
